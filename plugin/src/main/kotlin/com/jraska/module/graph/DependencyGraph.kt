@@ -60,7 +60,10 @@ class DependencyGraph private constructor() {
   }
 
   fun subTree(key: String): DependencyGraph {
-    require(nodes.contains(key)) { "Dependency Tree doesn't contain module: $key" }
+    if (!nodes.contains(key)) {
+      println("Node not found, Skipping...")
+      return DependencyGraph()
+    }
 
     val connections = mutableListOf<Pair<String, String>>()
     addConnections(nodes.getValue(key), connections)

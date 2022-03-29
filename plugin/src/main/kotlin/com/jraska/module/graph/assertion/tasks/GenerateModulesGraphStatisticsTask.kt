@@ -12,7 +12,7 @@ open class GenerateModulesGraphStatisticsTask : DefaultTask() {
   @TaskAction
   fun run() {
     val dependencyGraph = project.createDependencyGraphs(configurationsToLook)
-    val statistics = dependencyGraph.map { it.statistics() }
+    val statistics = dependencyGraph.filter { it.nodes().isNotEmpty() }.map { it.statistics() }
     println(statistics)
     ModuleGraphStatisticsReporter.report(gradle = project.gradle, statistics = statistics)
   }
